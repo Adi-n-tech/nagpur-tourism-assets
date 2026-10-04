@@ -159,12 +159,15 @@
             </div>
 
             <div class="hero-visual">
-                <div class="card-preview">
-                    <img src="deekshabhoomi/image1.jpg" alt="Deekshabhoomi Nagpur" class="preview-img">
-                    <div class="preview-overlay">
-                        <div class="preview-badge">★ 4.9 Rating</div>
-                        <h3>Deekshabhoomi</h3>
-                        <p>Sacred Buddhist stupa & architectural landmark • 4.0 km</p>
+                <div class="hero-slideshow" id="heroSlideshow">
+                    <!-- Slides inserted dynamically by script with seamless cross-fade -->
+                    <div class="slides-container" id="slidesContainer"></div>
+
+                    <!-- Slide Navigation Controls -->
+                    <div class="slides-controls">
+                        <button class="slide-nav-btn prev" id="prevSlideBtn" aria-label="Previous destination">‹</button>
+                        <div class="slide-dots" id="slideDots"></div>
+                        <button class="slide-nav-btn next" id="nextSlideBtn" aria-label="Next destination">›</button>
                     </div>
                 </div>
             </div>
@@ -306,5 +309,192 @@
         </div>
     </footer>
 
+    <!-- Hero Showcase Carousel Script -->
+    <script>
+        const showcasePlaces = [
+            {
+                name: "Deekshabhoomi",
+                category: "Spiritual & Heritage",
+                rating: "4.9",
+                distance: "4.0 km",
+                desc: "Sacred Buddhist stupa & monumental architectural landmark",
+                img: "deekshabhoomi/image1.jpg",
+                url: "places/deekshabhoomi.html"
+            },
+            {
+                name: "Futala Lake Waterfront",
+                category: "Lakes & Sunsets",
+                rating: "4.7",
+                distance: "5.5 km",
+                desc: "Vibrant lakeside promenade, illuminated fountains & street snacks",
+                img: "futala_lake_waterfront_promenade/image1.jpg",
+                url: "places/futala-lake-waterfront-promenade.html"
+            },
+            {
+                name: "BAPS Swaminarayan Mandir",
+                category: "Spiritual Temples",
+                rating: "4.9",
+                distance: "7.8 km",
+                desc: "Intricately carved pink sandstone temple & serene spiritual campus",
+                img: "baps_swaminarayan_mandir/image1.jpg",
+                url: "places/baps-swaminarayan-mandir.html"
+            },
+            {
+                name: "Dragon Palace Temple",
+                category: "Buddhist Temple",
+                rating: "4.8",
+                distance: "16.2 km",
+                desc: "Lotus Temple of Kamptee surrounded by landscaped zen gardens",
+                img: "dragon_palace_lotus_buddhist_temple/image1.jpg",
+                url: "places/dragon-palace-lotus-buddhist-temple.html"
+            },
+            {
+                name: "Shri Mahalakshmi Jagdamba Temple",
+                category: "Pilgrimage Heritage",
+                rating: "4.8",
+                distance: "14.5 km",
+                desc: "Famous Koradi temple complex & grand cultural tourism corridor",
+                img: "shri_mahalakshmi_jagdamba_temple_koradi/image1.jpg",
+                url: "places/shri-mahalakshmi-jagdamba-temple-koradi.html"
+            },
+            {
+                name: "Gorewada Zoo & Safari",
+                category: "Wildlife & Nature",
+                rating: "4.6",
+                distance: "8.2 km",
+                desc: "International zoological park & thrilling forest safari trails",
+                img: "balasaheb_thackeray_gorewada_international_zoological_park/image1.jpg",
+                url: "places/balasaheb-thackeray-gorewada-international-zoological-park.html"
+            },
+            {
+                name: "Sitabuldi Fort",
+                category: "Historical Heritage",
+                rating: "4.7",
+                distance: "1.2 km",
+                desc: "1817 Anglo-Maratha war fortress commanding panoramic city views",
+                img: "sitabuldi_fort_memorial/image1.jpg",
+                url: "places/sitabuldi-fort-memorial.html"
+            },
+            {
+                name: "Ramtek Gad Mandir",
+                category: "Historic Fortress",
+                rating: "4.8",
+                distance: "48.0 km",
+                desc: "Hilltop ancient Rama fortress temple with ancient poetry legacy",
+                img: "ramtek_gad_mandir_historic_hill_fortress/image1.jpg",
+                url: "places/ramtek-gad-mandir-historic-hill-fortress.html"
+            },
+            {
+                name: "Ambazari Garden & Lake",
+                category: "Gardens & Nature",
+                rating: "4.6",
+                distance: "6.0 km",
+                desc: "Nagpur's largest scenic lake, children's park & boating club",
+                img: "ambazari_garden_lake/image1.jpg",
+                url: "places/ambazari-garden-lake.html"
+            },
+            {
+                name: "Zero Mile Freedom Park",
+                category: "Monuments & Parks",
+                rating: "4.7",
+                distance: "0.5 km",
+                desc: "The Great Trigonometrical Survey geographical center of India",
+                img: "zero_mile_freedom_park/image1.jpg",
+                url: "places/zero-mile-freedom-park.html"
+            }
+        ];
+
+        let currentIndex = 0;
+        let slideTimer = null;
+        const container = document.getElementById('slidesContainer');
+        const dotsContainer = document.getElementById('slideDots');
+        const prevBtn = document.getElementById('prevSlideBtn');
+        const nextBtn = document.getElementById('nextSlideBtn');
+        const slideshow = document.getElementById('heroSlideshow');
+
+        // Render Slides and Dots
+        showcasePlaces.forEach((place, index) => {
+            const slide = document.createElement('a');
+            slide.href = place.url;
+            slide.className = `hero-slide ${index === 0 ? 'active' : ''}`;
+            slide.innerHTML = `
+                <img src="${place.img}" alt="${place.name} Nagpur" class="preview-img" loading="${index === 0 ? 'eager' : 'lazy'}">
+                <div class="preview-overlay">
+                    <div class="preview-badge-row">
+                        <span class="preview-badge">★ ${place.rating}</span>
+                        <span class="preview-cat-badge">${place.category}</span>
+                    </div>
+                    <h3>${place.name}</h3>
+                    <p>${place.desc} • <strong>${place.distance}</strong></p>
+                    <span class="view-spot-btn">View Destination →</span>
+                </div>
+            `;
+            container.appendChild(slide);
+
+            const dot = document.createElement('button');
+            dot.className = `slide-dot ${index === 0 ? 'active' : ''}`;
+            dot.setAttribute('aria-label', `Go to slide ${index + 1}: ${place.name}`);
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.slide-dot');
+
+        function updateSlide(index) {
+            slides.forEach((s, i) => s.classList.toggle('active', i === index));
+            dots.forEach((d, i) => d.classList.toggle('active', i === index));
+            currentIndex = index;
+        }
+
+        function nextSlide() {
+            const nextIdx = (currentIndex + 1) % showcasePlaces.length;
+            updateSlide(nextIdx);
+        }
+
+        function prevSlide() {
+            const prevIdx = (currentIndex - 1 + showcasePlaces.length) % showcasePlaces.length;
+            updateSlide(prevIdx);
+        }
+
+        function goToSlide(index) {
+            updateSlide(index);
+            resetTimer();
+        }
+
+        function startTimer() {
+            slideTimer = setInterval(nextSlide, 3000); // 3-second auto-transition
+        }
+
+        function resetTimer() {
+            clearInterval(slideTimer);
+            startTimer();
+        }
+
+        prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            prevSlide();
+            resetTimer();
+        });
+
+        nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            nextSlide();
+            resetTimer();
+        });
+
+        // Pause slideshow on mouse hover / touch interaction
+        slideshow.addEventListener('mouseenter', () => clearInterval(slideTimer));
+        slideshow.addEventListener('mouseleave', () => startTimer());
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') { nextSlide(); resetTimer(); }
+            if (e.key === 'ArrowLeft') { prevSlide(); resetTimer(); }
+        });
+
+        // Start 3-second auto cycle
+        startTimer();
+    </script>
 </body>
 </html>
