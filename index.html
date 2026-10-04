@@ -160,14 +160,27 @@
 
             <div class="hero-visual">
                 <div class="hero-slideshow" id="heroSlideshow">
-                    <!-- Slides inserted dynamically by script with seamless cross-fade -->
-                    <div class="slides-container" id="slidesContainer"></div>
+                    <!-- Slides container (first slide pre-rendered for instant load) -->
+                    <div class="slides-container" id="slidesContainer">
+                        <a href="places/deekshabhoomi.html" class="hero-slide active">
+                            <img src="deekshabhoomi/image1.jpg" alt="Deekshabhoomi Nagpur" class="preview-img">
+                            <div class="preview-overlay">
+                                <div class="preview-badge-row">
+                                    <span class="preview-badge">★ 4.9</span>
+                                    <span class="preview-cat-badge">Spiritual & Heritage</span>
+                                </div>
+                                <h3>Deekshabhoomi</h3>
+                                <p>Sacred Buddhist stupa & monumental architectural landmark • <strong>4.0 km</strong></p>
+                                <span class="view-spot-btn">View Destination →</span>
+                            </div>
+                        </a>
+                    </div>
 
                     <!-- Slide Navigation Controls -->
                     <div class="slides-controls">
-                        <button class="slide-nav-btn prev" id="prevSlideBtn" aria-label="Previous destination">‹</button>
+                        <button type="button" class="slide-nav-btn prev" id="prevSlideBtn" aria-label="Previous destination">‹</button>
                         <div class="slide-dots" id="slideDots"></div>
-                        <button class="slide-nav-btn next" id="nextSlideBtn" aria-label="Next destination">›</button>
+                        <button type="button" class="slide-nav-btn next" id="nextSlideBtn" aria-label="Next destination">›</button>
                     </div>
                 </div>
             </div>
@@ -413,6 +426,8 @@
         const slideshow = document.getElementById('heroSlideshow');
 
         // Render Slides and Dots
+        container.innerHTML = '';
+        dotsContainer.innerHTML = '';
         showcasePlaces.forEach((place, index) => {
             const slide = document.createElement('a');
             slide.href = place.url;
