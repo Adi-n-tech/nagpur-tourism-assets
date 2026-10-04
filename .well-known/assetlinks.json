@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.adintech.nagpurtourismapp",
+      "sha256_cert_fingerprints": [
+        "14:6D:E9:7D:0F:52:CC:71:3E:40:24:AE:FD:E0:38:C0:63:45:83:FC:14:0E:AB:76:43:BF:7F:8A:23:A5:EE:04"
+      ]
+    }
+  }
+]
